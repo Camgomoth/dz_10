@@ -17,7 +17,7 @@ class Name(Field):
 
 class Phone(Field):     
     def __init__(self,value):
-        if len(value) == 10:
+        if len(value) == 10 and value.isdigit():
             self.value = value
         else:
             raise ValueError       
@@ -44,26 +44,20 @@ class Record:
         return f"It is impossible to remove a non-existing phone number, try command 'add_phone'"  
 
     def edit_phone(self, phone, new_phone):
-       if not self.phones:
-        for i, j in book.data.items():
-            if str(i) == str(self.name):
-                self.phones = j
-        
-        for i in self.phones:    
-            
-             if str(phone) == str(i):
+        for i in self.phones:
+            if str(phone) == str(i):
                  indx = self.phones.index(i)
                  self.phones.remove(i)
                  self.phones.insert(indx, Phone(new_phone))
      
                  return f'Phone has been edited succesfully {self.phones}'
-        return f"It is impossible to edit a non-existing phone number, try command 'add_phone'"
+        raise ValueError
 
     def find_phone(self, phone):
         for i in self.phones:
             if str(phone) == str(i):
                     return Phone(phone)
-        return f"It is impossible to find a non-existing phone number, try command 'add_phone'"
+        return 
 
     def __str__(self):
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
@@ -71,17 +65,14 @@ class Record:
 class AddressBook(UserDict):
     def add_record(self, record):
     
-        self.data[Name(record.name)] =  record.phones
+        self.data[record.name.value] = record
 
         return f'{self.data}'
 
     
-    def find(self, record):
-        
-        for i in self.data.keys():
-             if str(i) == record:
-                
-                  return Record(record)
+    def find(self, name):
+    
+        return self.data.get(name)
     
       
     
@@ -94,6 +85,16 @@ class AddressBook(UserDict):
         return f"Something went wrong"
     
 
+
+
+
+
+
+
+
+
+
+     
 
 
      
