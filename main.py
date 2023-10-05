@@ -44,24 +44,19 @@ class Record:
         return f"It is impossible to remove a non-existing phone number, try command 'add_phone'"  
 
     def edit_phone(self, phone, new_phone):
-        if not self.phones:
-            self.phones= AddressBook().data
-            print(self.phones)
-            for i in self.phones:
-                for j in i.get(self.name):
-                    if str(phone) == str(j):
-                        indx =  i.get(self.name).index(j)
-                        i.get(self.name).remove(j)
-                        i.get(self.name).insert(indx, Phone(new_phone))
-                        return f'Phone has been edited succesfully {self.phones}'
-                    
+       if not self.phones:
+        for i, j in book.data.items():
+            if str(i) == str(self.name):
+                self.phones = j
+        
         for i in self.phones:    
-            if str(phone) == str(i):
-                indx = self.phones.index(i)
-                self.phones.remove(i)
-                self.phones.insert(indx, Phone(new_phone))
+            
+             if str(phone) == str(i):
+                 indx = self.phones.index(i)
+                 self.phones.remove(i)
+                 self.phones.insert(indx, Phone(new_phone))
      
-                return f'Phone has been edited succesfully {self.phones}'
+                 return f'Phone has been edited succesfully {self.phones}'
         return f"It is impossible to edit a non-existing phone number, try command 'add_phone'"
 
     def find_phone(self, phone):
@@ -76,18 +71,17 @@ class Record:
 class AddressBook(UserDict):
     def add_record(self, record):
     
-        self.data[str(record.name)] =  record.phones
+        self.data[Name(record.name)] =  record.phones
 
         return f'{self.data}'
 
     
     def find(self, record):
-       pass
-        #  print(self.data)
-        #  for i in self.data:
-        #      if str(i) == record:
-        #          Record(record).phones = self.data.get(i)
-        #          return Record(record).phones
+        
+        for i in self.data.keys():
+             if str(i) == record:
+                
+                  return Record(record)
     
       
     
@@ -100,23 +94,6 @@ class AddressBook(UserDict):
         return f"Something went wrong"
     
 
-
-
-
-# book = AddressBook()
-
-# jane_record = Record("Jane")
-# jane_record.add_phone("9876543210")
-# jane_record.add_phone("1234567890")
-# book.add_record(jane_record)
-
-# john_record = Record("John")
-# john_record.add_phone("1234567890")
-# john_record.add_phone("5555555555")   
-
-# book.add_record(john_record)
-# print(book.find("Jane"))
-# #print(jane.edit_phone("1234567890", "0000000000"))    
 
 
      
